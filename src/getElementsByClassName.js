@@ -12,20 +12,14 @@ var getElementsByClassName = function(className){
   }
   var matchedClassElements = [];
   window.onload = function(){
-    var init = function(body){
-      var checkNode = function(nextNode) {
-	    if (nextNode.classList && nextNode.classList.contains(className)) {
-	      matchedClassElements.push(nextNode);
-	    }
-	    listChildNodes(nextNode);
-	  };
-	  var listChildNodes = function(node){
-	  	var currentNodes = node.childNodes;
-	    for (var j = 0, y = currentNodes.length; j < y; j++){
-	  	  checkNode(currentNodes[j]);
-	    }
-	  };
-	  checkNode(body);
+    var init = function(node){
+	  var currentNodes = node.childNodes;
+	  if (node.classList && node.classList.contains(className)) {
+        matchedClassElements.push(node);
+      }
+      for (var j = 0, y = currentNodes.length; j < y; j++){
+  	    init(currentNodes[j]);
+      }
     };
     init(document.body);
   }();
